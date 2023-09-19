@@ -5,6 +5,7 @@ import com.telusko.questionservice.model.QuestionWrapper;
 import com.telusko.questionservice.model.Response;
 import com.telusko.questionservice.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,9 @@ import java.util.List;
 public class QuestionController {
 	@Autowired
 	QuestionService questionService;
+	
+	@Autowired
+	Environment environment;
 
 	@GetMapping(path="allQuestion")
 	public ResponseEntity<List<Question>> getAllQuestion() {
@@ -43,6 +47,7 @@ public class QuestionController {
 	
 	@PostMapping("getQuestions")
 	public ResponseEntity<List<QuestionWrapper>> getQuestionsFromId(@RequestBody List<Integer> questionIds){
+		System.out.println(environment.getProperty("local.server.port"));
 		return questionService.getQuestionsFromId(questionIds);
 	}
 	
